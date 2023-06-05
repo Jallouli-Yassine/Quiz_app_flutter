@@ -4,8 +4,11 @@ const startAlignment = Alignment.topLeft;
 const endAlignment = Alignment.bottomRight;
 
 class StartWidget extends StatelessWidget {
-  const StartWidget(this.colorsList, {super.key});
+  const StartWidget(this.colorsList, this.startQuiz, {super.key});
+  
   final List<Color> colorsList;
+  final Function() startQuiz;
+
   @override
   Widget build(context) {
     return Container(
@@ -23,6 +26,7 @@ class StartWidget extends StatelessWidget {
           Image.asset(
             'assets/images/quiz-logo.png',
             width: 300,
+            color: Color.fromARGB(160, 255, 255, 255),
           ),
           const SizedBox(height: 50),
           const Text(
@@ -33,16 +37,15 @@ class StartWidget extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 30),
-          OutlinedButton(
-            style: OutlinedButton.styleFrom(
-              foregroundColor: Colors.white,
-              textStyle: const TextStyle(
-                fontSize: 17,
-              )
-            ),
-            onPressed: () {},
-            child: const Text("Start Quiz")
-          )
+          OutlinedButton.icon(
+              style: OutlinedButton.styleFrom(
+                  foregroundColor: Colors.white,
+                  textStyle: const TextStyle(
+                    fontSize: 17,
+                  )),
+              onPressed:startQuiz,
+              icon: const Icon(Icons.arrow_right_alt),
+              label: const Text("Start Quiz"))
         ],
       )),
     );

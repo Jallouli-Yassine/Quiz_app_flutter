@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:quiz_app/start_widget.dart';
+import 'package:quiz_app/quiz_screen.dart';
+
 
 void main() {
   const List<Color> listC = [
@@ -7,11 +8,5 @@ void main() {
     Color.fromARGB(255, 37, 16, 71),
   ];
 
-  runApp(
-    const MaterialApp(
-      home: Scaffold(
-        body: StartWidget(listC),
-      ),
-    ),
-  );
+  runApp(const QuizWidget());
 }
