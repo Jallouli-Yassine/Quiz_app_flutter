@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 const startAlignment = Alignment.topLeft;
 const endAlignment = Alignment.bottomRight;
 
 class StartWidget extends StatelessWidget {
   const StartWidget(this.colorsList, this.startQuiz, {super.key});
-  
+
   final List<Color> colorsList;
   final Function() startQuiz;
 
@@ -29,11 +30,12 @@ class StartWidget extends StatelessWidget {
             color: Color.fromARGB(160, 255, 255, 255),
           ),
           const SizedBox(height: 50),
-          const Text(
+          Text(
             'Learn Flutter the fun way!',
-            style: TextStyle(
-              color: Color.fromARGB(255, 240, 232, 255),
+            style: GoogleFonts.lato(
+              color: Color.fromARGB(255, 255, 255, 255),
               fontSize: 24,
+              fontWeight: FontWeight.bold,
             ),
           ),
           const SizedBox(height: 30),
@@ -43,7 +45,7 @@ class StartWidget extends StatelessWidget {
                   textStyle: const TextStyle(
                     fontSize: 17,
                   )),
-              onPressed:startQuiz,
+              onPressed: startQuiz,
               icon: const Icon(Icons.arrow_right_alt),
               label: const Text("Start Quiz"))
         ],
