@@ -8,5 +8,5 @@ void main() {
     Color.fromARGB(255, 37, 16, 71),
   ];
 
-  runApp(const QuizWidget());
+  runApp(const QuizWidget(refresh: false));
 }

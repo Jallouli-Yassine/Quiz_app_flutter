@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:quiz_app/data/questions.dart';
 import 'package:quiz_app/questions_screen.dart';
 import 'package:quiz_app/start_widget.dart';
+import 'package:quiz_app/result_screen.dart';
 
 List<Color> listC = const [
   Color.fromARGB(255, 70, 29, 137),
@@ -9,41 +10,61 @@ List<Color> listC = const [
 ];
 
 class QuizWidget extends StatefulWidget {
-  const QuizWidget({super.key});
+  const QuizWidget({required this.refresh, Key? key}) : super(key: key);
+  final bool refresh;
+
   @override
-  State<QuizWidget> createState() {
-    return _QuizWidgetState();
-  }
+  State<QuizWidget> createState() => _QuizWidgetState();
 }
 
 class _QuizWidgetState extends State<QuizWidget> {
-  final List<String> selectedAnswers = [];
+  List<String> selectedAnswers = [];
+  bool refreshValue = false;
+  var activeScreen = 'menu-screen';
+
+  @override
+  void initState() {
+    super.initState();
+    refreshValue = widget.refresh;
+  }
+
   void chooseAnswer(String answer) {
     selectedAnswers.add(answer);
     if (selectedAnswers.length == questions.length) {
       setState(() {
-        selectedAnswers.clear();
-        activeScreen = 'menu-screen';
+        activeScreen = 'result-screen';
       });
     }
   }
 
-  var activeScreen = 'menu-screen';
-
   void switchScreen() {
     setState(() {
-      //setState taawd texecuti build (najmo nkoulo refresh lel screen)
       activeScreen = 'questions-screen';
     });
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
+    if (refreshValue) {
+      setState(() {
+        refreshValue = false;
+        selectedAnswers.clear();
+        activeScreen = 'questions-screen';
+      });
+    }
+
+    Widget screen = StartWidget(listC, switchScreen);
+
+    if (activeScreen == 'questions-screen') {
+      screen = QuestionsWidget(onSelectAnswer: chooseAnswer);
+    }
+    if (activeScreen == 'result-screen') {
+      screen = ResultWidget(chooseAnswers: selectedAnswers);
+    }
+
     return MaterialApp(
       home: Scaffold(
-        body: activeScreen == 'menu-screen'
-            ? StartWidget(listC, switchScreen)
-            : QuestionsWidget(onSelectAnswer: chooseAnswer),
+        body: screen,
       ),
     );
   }
